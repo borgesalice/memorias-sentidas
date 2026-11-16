@@ -15,6 +15,7 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .btn.out:hover{background:var(--cacau);color:var(--creme)}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 [hidden]{display:none!important}
+.sep{display:none}
 
 /* faixa de aviso */
 .aviso{background:var(--cacau-esc);color:#E2D3C4;font-size:13px;text-align:center;padding:10px var(--gutter)}
@@ -99,15 +100,88 @@ footer{border-top:1px solid var(--areia);padding:28px var(--gutter);font-size:13
 .entrar{animation:entrar .5s ease both}
 @keyframes entrar{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
+/* ---------- Responsivo ---------- */
+
+/* Notebooks e tablets na horizontal */
+@media (max-width:1200px){
+  .hero .txt{max-width:62%}
+  .hero .foto{width:42%}
+  .passos{gap:22px;max-width:56%}
+  .passos div{font-size:14px;gap:10px}
+  .passos span{width:36px;height:36px;font-size:15px}
+  .res{grid-template-columns:1fr minmax(300px,420px)}
+  .prod{padding:40px 40px 44px}
+  .prod .img{margin:10px -40px 0}
+}
+
+/* Tablets na vertical e celulares */
 @media (max-width:900px){
-  .hero{flex-direction:column;align-items:stretch;min-height:auto}
-  .hero .foto{position:relative;width:100%;height:360px;order:-1}
-  .hero .foto::before{background:linear-gradient(0deg,var(--creme) 0%,rgba(251,244,234,0) 40%)}
-  .hero .txt{padding:20px var(--gutter) 150px}
-  .passos{gap:20px 28px}
+  .topo{padding:18px var(--gutter)}
   .topo small{display:none}
-  .res{grid-template-columns:1fr}
+
+  .hero{flex-direction:column;align-items:stretch;min-height:auto}
+  .hero .foto{position:relative;width:100%;height:clamp(300px,55vw,460px);order:-1;background-position:center 22%}
+  .hero .foto::before{background:linear-gradient(0deg,var(--creme) 0%,rgba(251,244,234,0) 40%)}
+  .hero .txt{max-width:none;padding:8px var(--gutter) 0}
+  .hero .acoes{margin-top:32px}
+  .passos{position:static;max-width:none;padding:40px var(--gutter) 56px;gap:18px 32px}
+  .selo{width:40%}
+
+  .quiz{padding:56px 0 64px;min-height:auto}
+  .quiz h2{margin-top:36px}
+  .carr{margin-top:34px}
+  .trilho{gap:16px;padding:8px var(--gutter) 24px;scroll-padding:0 var(--gutter)}
+  .op{flex-basis:clamp(240px,62vw,320px);height:260px;padding:26px 24px;scroll-snap-align:start}
+  .op b{font-size:23px}
+  .op small{font-size:14px}
+  .op.sel::after{top:20px;right:20px;width:30px;height:30px;font-size:14px}
+
+  .resultado{padding:64px var(--gutter) 72px}
+  .res{grid-template-columns:1fr;margin-top:36px;gap:20px}
   .card{min-height:0}
-  .op{flex-basis:78vw;height:280px}
+  .card::before{width:420px;height:420px;right:-140px;bottom:-160px}
+  .prod{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"img k" "img h" "img p" "img b";column-gap:24px;align-content:center;padding:36px}
+  .prod .k{grid-area:k;align-self:end}
+  .prod h5{grid-area:h}
+  .prod .img{grid-area:img;height:300px;margin:0;background-size:auto 130%}
+  .prod p{grid-area:p}
+  .prod .btn{grid-area:b;align-self:start}
+}
+
+/* Celulares */
+@media (max-width:560px){
+  .aviso{font-size:12px;padding:8px var(--gutter)}
+  .topo .marca{font-size:20px}
+
+  .hero .acoes{flex-direction:column;align-items:stretch;gap:14px}
+  .hero .acoes .btn{justify-content:center}
+  .hero .acoes small{text-align:center}
+  .hero .acoes small br{display:none}
+  .hero .acoes small .sep{display:inline}
+  .passos{flex-direction:column;gap:14px}
+  .passos span{width:36px;height:36px;font-size:15px}
+
+  .prog>span:last-child{display:none}
+  .quiz .sub{font-size:15px}
+  .op{flex-basis:76vw;height:240px}
+  .seta{width:46px;height:46px}
+  .nav2{width:100%;padding:0 var(--gutter);display:grid;grid-template-columns:auto 1fr;gap:12px}
+  .nav2 .btn{justify-content:center;padding:16px 20px;font-size:15px}
+
+  .card{padding:36px 26px 30px;border-radius:20px}
+  .card p{margin-top:22px}
+  .tags{margin-top:24px;gap:8px}
+  .tags span{font-size:13px;padding:7px 14px}
+  .share{padding-top:34px;gap:10px}
+  .share .lab{width:100%;margin:0 0 4px}
+  .share button,.share a{flex:1 1 auto;text-align:center;padding:13px 16px;font-size:14px}
+  .share #compartilhar{flex-basis:100%}
+
+  .prod{display:flex;padding:32px 26px 30px;border-radius:20px}
+  .prod .k{align-self:auto}
+  .prod .img{height:240px;margin:6px -26px 0;background-size:auto 145%}
+  .prod .btn{align-self:stretch;justify-content:center;white-space:nowrap}
+  .refazer{margin-top:28px}
+  footer{font-size:12px;padding:22px var(--gutter)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
