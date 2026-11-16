@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desperte suas memórias</title>
+<meta name="description" content="Projeto acadêmico: experiência interativa sobre aromas e memórias, inspirada em Natura Ekos Cacau Frescor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --creme:#FBF4EA;--papel:#FFFBF5;--areia:#EBDCC6;--areia2:#F3E6D4;
+  --caramelo:#C08552;--cara-claro:#E3B98F;--cacau:#5A3424;--cacau-esc:#2E1A12;--texto:#6B4A38;
+  --gutter:clamp(20px,5.7vw,110px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;color:var(--cacau-esc);background:var(--creme);-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.serif{font-family:'Lora',serif;font-weight:500}
+.k{font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--caramelo);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--cacau);color:var(--creme);font-size:16px;font-weight:500;letter-spacing:.03em;padding:18px 36px;border-radius:999px;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--cacau-esc)}
+.btn.out{background:transparent;border:1.5px solid var(--cacau);color:var(--cacau)}
+.btn.out:hover{background:var(--cacau);color:var(--creme)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+[hidden]{display:none!important}
+
+/* faixa de aviso */
+.aviso{background:var(--cacau-esc);color:#E2D3C4;font-size:13px;text-align:center;padding:10px var(--gutter)}
+
+/* topo */
+.topo{display:flex;align-items:center;justify-content:space-between;padding:26px var(--gutter);border-bottom:1px solid var(--areia);background:var(--papel)}
+.topo .marca{font-family:'Lora',serif;font-size:22px;color:var(--cacau)}
+.topo .marca em{color:var(--caramelo)}
+.topo small{font-size:13px;color:var(--texto)}
+
+/* 1. abertura */
+.hero{position:relative;min-height:calc(100vh - 120px);display:flex;align-items:center;overflow:hidden}
+.hero .foto{position:absolute;right:0;top:0;bottom:0;width:45%;background:url(img/cacau-ambiente.jpg) center 40%/cover}
+.hero .foto::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--creme) 0%,rgba(251,244,234,.5) 14%,rgba(251,244,234,0) 34%)}
+.hero .txt{position:relative;padding:80px var(--gutter) 140px;max-width:960px}
+.hero h1{font-size:clamp(52px,6.2vw,112px);line-height:1.02;margin-top:22px;letter-spacing:-.01em}
+.hero h1 em{color:var(--cacau)}
+.hero p{margin-top:28px;font-size:clamp(17px,1.2vw,21px);line-height:1.6;color:var(--texto);font-weight:300;max-width:620px}
+.hero .acoes{margin-top:44px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.hero .acoes small{font-size:14px;color:var(--texto);line-height:1.5}
+.passos{position:absolute;left:var(--gutter);bottom:56px;display:flex;gap:56px;flex-wrap:wrap}
+.passos div{display:flex;align-items:center;gap:14px;font-size:15px;color:var(--cacau)}
+.passos span{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--caramelo);display:grid;place-items:center;font-family:'Lora',serif;color:var(--caramelo)}
+.selo{position:absolute;left:var(--gutter);bottom:0;height:8px;width:min(420px,50%);background:var(--caramelo)}
+
+/* 2. quiz */
+.quiz{background:var(--areia2);padding:90px 0 100px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+.prog{width:min(760px,calc(100% - 2*var(--gutter)));display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--texto)}
+.barra{width:min(760px,calc(100% - 2*var(--gutter)));height:6px;border-radius:9px;background:rgba(90,52,36,.12);margin-top:16px;overflow:hidden}
+.barra i{display:block;height:100%;width:25%;border-radius:9px;background:var(--caramelo);transition:width .5s ease}
+.quiz h2{font-size:clamp(38px,3.6vw,68px);line-height:1.08;text-align:center;margin-top:52px;padding:0 var(--gutter);max-width:1200px}
+.quiz h2 em{color:var(--cacau)}
+.quiz .sub{margin-top:18px;font-size:clamp(16px,1.1vw,19px);color:var(--texto);font-weight:300;text-align:center;padding:0 var(--gutter)}
+.carr{position:relative;width:100%;margin-top:50px}
+.trilho{display:flex;gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px max(var(--gutter),calc(50% - 680px)) 30px;scrollbar-width:none}
+.trilho::-webkit-scrollbar{display:none}
+.op{flex:0 0 320px;height:300px;scroll-snap-align:center;border-radius:18px;background:var(--papel);padding:32px 30px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;border:1.5px solid transparent;box-shadow:0 12px 30px rgba(46,26,18,.06);position:relative;transition:transform .2s,box-shadow .2s,border-color .2s}
+.op:hover{transform:translateY(-4px);box-shadow:0 18px 36px rgba(46,26,18,.1)}
+.op .ic{width:64px;height:64px;border-radius:50%;background:var(--areia2);display:grid;place-items:center}
+.op .ic svg{width:32px;height:32px;stroke:var(--caramelo);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.op b{display:block;font-family:'Lora',serif;font-weight:500;font-size:27px;line-height:1.15}
+.op small{display:block;font-size:15px;color:var(--texto);margin-top:8px;line-height:1.45}
+.op.sel{border-color:var(--caramelo);background:#FFF6EC;box-shadow:0 18px 40px rgba(192,133,82,.22)}
+.op.sel::after{content:"✓";position:absolute;top:24px;right:24px;width:34px;height:34px;border-radius:50%;background:var(--caramelo);color:var(--creme);display:grid;place-items:center;font-size:16px;font-weight:600}
+.controles{display:flex;align-items:center;gap:10px;margin-top:10px}
+.seta{width:52px;height:52px;border-radius:50%;background:var(--papel);box-shadow:0 8px 20px rgba(46,26,18,.12);display:grid;place-items:center;color:var(--cacau);font-size:20px}
+.seta:first-child{margin-right:14px}.seta:last-child{margin-left:14px}
+.dots{display:flex;gap:10px}
+.dots i{width:10px;height:10px;border-radius:9px;background:rgba(90,52,36,.2);transition:width .3s,background .3s}
+.dots i.on{width:34px;background:var(--caramelo)}
+.nav2{margin-top:34px;display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+
+/* 3. resultado */
+.resultado{padding:90px var(--gutter) 110px;position:relative}
+.resultado>.k{text-align:center}
+.resultado h3{text-align:center;font-size:clamp(22px,1.6vw,30px);font-style:italic;color:var(--texto);margin-top:14px;font-weight:400}
+.res{margin-top:56px;display:grid;grid-template-columns:1fr minmax(320px,560px);gap:36px}
+.card{border-radius:24px;background:var(--cacau-esc);color:var(--creme);padding:clamp(40px,4.7vw,90px);position:relative;overflow:hidden;min-height:620px;display:flex;flex-direction:column}
+.card::before{content:"";position:absolute;right:-160px;bottom:-200px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(192,133,82,.55),rgba(192,133,82,0) 70%);pointer-events:none}
+.card .k{color:var(--cara-claro)}
+.card h4{font-family:'Lora',serif;font-weight:500;font-size:clamp(52px,5vw,96px);line-height:1;margin-top:22px}
+.card h4 em{color:var(--cara-claro)}
+.card p{margin-top:30px;font-family:'Lora',serif;font-style:italic;font-size:clamp(20px,1.4vw,27px);line-height:1.55;max-width:700px;color:#EADBCB;position:relative}
+.tags{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap}
+.tags span{font-size:14px;letter-spacing:.06em;border:1px solid rgba(251,244,234,.3);padding:8px 18px;border-radius:999px;color:#E2D3C4}
+.share{margin-top:auto;padding-top:48px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:relative}
+.share .lab{font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:#BFA993;margin-right:8px}
+.share button,.share a{padding:14px 26px;border-radius:999px;font-size:15px;font-weight:500;background:var(--creme);color:var(--cacau-esc);text-decoration:none}
+.share .o{background:transparent;border:1px solid rgba(251,244,234,.4);color:var(--creme)}
+.prod{border-radius:24px;background:var(--papel);border:1px solid var(--areia);padding:48px 52px 52px;display:flex;flex-direction:column;overflow:hidden}
+.prod h5{font-family:'Lora',serif;font-weight:500;font-size:clamp(30px,2.1vw,40px);line-height:1.1;margin-top:12px}
+.prod h5 em{color:var(--cacau)}
+.prod .img{height:320px;margin:10px -52px 0;background:url(img/cacau-frasco.jpg) center 60%/auto 150% no-repeat;mix-blend-mode:multiply}
+.prod p{font-size:16px;color:var(--texto);line-height:1.6;margin-top:14px;font-weight:300}
+.prod .btn{margin-top:28px;align-self:flex-start;text-decoration:none}
+.refazer{display:block;margin:40px auto 0;font-size:15px;color:var(--cacau);text-decoration:underline;text-underline-offset:4px}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:var(--cacau-esc);color:var(--creme);padding:14px 24px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.on{opacity:1}
+
+footer{border-top:1px solid var(--areia);padding:28px var(--gutter);font-size:13px;color:var(--texto);line-height:1.6;text-align:center}
+
+.entrar{animation:entrar .5s ease both}
+@keyframes entrar{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+@media (max-width:900px){
+  .hero{flex-direction:column;align-items:stretch;min-height:auto}
+  .hero .foto{position:relative;width:100%;height:360px;order:-1}
+  .hero .foto::before{background:linear-gradient(0deg,var(--creme) 0%,rgba(251,244,234,0) 40%)}
+  .hero .txt{padding:20px var(--gutter) 150px}
+  .passos{gap:20px 28px}
+  .topo small{display:none}
+  .res{grid-template-columns:1fr}
+  .card{min-height:0}
+  .op{flex-basis:78vw;height:280px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="aviso">Projeto acadêmico de produção de conteúdos digitais. Esta página não é um site oficial da Natura.</div>
+
+<header class="topo">
+  <span class="marca">Memórias <em>Sentidas</em></span>
+  <small>Uma experiência inspirada em Natura Ekos Cacau Frescor</small>
+</header>
+
+<!-- 1. ABERTURA -->
+<section class="hero" id="inicio">
+  <div class="foto" role="img" aria-label="Frasco do Ekos Cacau Frescor entre frutos de cacau"></div>
+  <div class="txt">
+    <div class="k">Experiência interativa</div>
+    <h1 class="serif">Desperte suas<br><em>memórias</em></h1>
+    <p>Responda a algumas perguntas sobre pessoas, lugares e momentos especiais e descubra qual memória os aromas guardam para você.</p>
+    <div class="acoes">
+      <button class="btn" id="comecar">Começar agora &nbsp;→</button>
+      <small>4 perguntas<br>Menos de 2 minutos</small>
+    </div>
+  </div>
+  <div class="passos" aria-hidden="true">
+    <div><span>1</span>Responda</div>
+    <div><span>2</span>Descubra seu resultado</div>
+    <div><span>3</span>Compartilhe</div>
+  </div>
+  <div class="selo"></div>
+</section>
+
+<!-- 2. QUIZ -->
+<section class="quiz" id="quiz" hidden>
+  <div class="prog"><span class="k" id="contador">Pergunta 1 de 4</span><span>Desperte suas memórias</span></div>
+  <div class="barra"><i id="barra"></i></div>
+  <h2 class="serif" id="pergunta"></h2>
+  <div class="sub" id="apoio"></div>
+  <div class="carr"><div class="trilho" id="trilho" role="radiogroup"></div></div>
+  <div class="controles">
+    <button class="seta" id="ant" aria-label="Opções anteriores">←</button>
+    <div class="dots" id="dots"></div>
+    <button class="seta" id="prox" aria-label="Próximas opções">→</button>
+  </div>
+  <div class="nav2">
+    <button class="btn out" id="voltar">← Voltar</button>
+    <button class="btn" id="avancar" disabled>Próxima pergunta &nbsp;→</button>
+  </div>
+</section>
+
+<!-- 3. RESULTADO -->
+<section class="resultado" id="resultado" hidden>
+  <div class="k">Seu resultado</div>
+  <h3 class="serif">A partir das suas respostas, sua memória é…</h3>
+  <div class="res">
+    <div class="card">
+      <div class="k">Memória de</div>
+      <h4 id="r-titulo"></h4>
+      <p id="r-texto"></p>
+      <div class="tags" id="r-tags"></div>
+      <div class="share">
+        <span class="lab">Compartilhe</span>
+        <button id="compartilhar">Compartilhar</button>
+        <a class="o" id="whats" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="o" id="copiar">Copiar link</button>
+      </div>
+    </div>
+    <div class="prod">
+      <div class="k" id="p-rotulo">O aroma da sua memória</div>
+      <h5>Natura Ekos Cacau <em>Frescor</em></h5>
+      <div class="img" role="img" aria-label="Frasco do Ekos Cacau Frescor"></div>
+      <p id="p-texto">Notas cítricas adocicadas e a cremosidade do cacau da Amazônia, para deixar os próximos momentos ainda mais doces.</p>
+      <a class="btn" href="https://www.natura.com.br/c/ekos" target="_blank" rel="noopener">Conhecer o produto</a>
+    </div>
+  </div>
+  <button class="refazer" id="refazer">Refazer o teste</button>
+</section>
+
+<footer>Memórias Sentidas · Projeto acadêmico. Natura e Ekos são marcas da Natura &amp; Co, citadas apenas para fins educacionais.</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* Ícones (traço simples) */
+const ICONES = {
+  folha:'<path d="M7 25C7 13 15 6 26 6c0 11-7 19-19 19z"/><path d="M7 25l11-11"/>',
+  sol:'<circle cx="16" cy="16" r="5"/><path d="M16 4v3M16 25v3M4 16h3M25 16h3M7.5 7.5l2 2M22.5 22.5l2 2M7.5 24.5l2-2M22.5 9.5l2-2"/>',
+  chocolate:'<rect x="8" y="5" width="16" height="22" rx="2"/><path d="M8 12h16M8 19h16M16 5v22"/>',
+  entardecer:'<path d="M9 21a7 7 0 0 1 14 0"/><path d="M4 21h24M7 26h18M16 8v3M8 13l2 2M24 13l-2 2"/>',
+  xicara:'<path d="M6 13h16v6a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6z"/><path d="M22 15h2a3 3 0 0 1 0 6h-2"/><path d="M11 9c0-2 2-2 2-4M16 9c0-2 2-2 2-4"/>',
+  pin:'<path d="M16 28s9-8 9-15a9 9 0 0 0-18 0c0 7 9 15 9 15z"/><circle cx="16" cy="13" r="3"/>',
+  casa:'<path d="M5 15L16 6l11 9"/><path d="M8 13v13h16V13"/><path d="M13 26v-7h6v7"/>',
+  coracao:'<path d="M16 26s-10-6-10-13a5 5 0 0 1 10-2 5 5 0 0 1 10 2c0 7-10 13-10 13z"/>',
+  musica:'<path d="M12 23V7l13-3v16"/><circle cx="9" cy="23" r="3"/><circle cx="22" cy="20" r="3"/>',
+  livro:'<path d="M4 7h9a3 3 0 0 1 3 3v16a3 3 0 0 0-3-3H4z"/><path d="M28 7h-9a3 3 0 0 0-3 3v16a3 3 0 0 1 3-3h9z"/>',
+  pessoas:'<circle cx="11" cy="11" r="4"/><circle cx="22" cy="12" r="3"/><path d="M4 26c0-4 3-7 7-7s7 3 7 7M18 26c0-3 2-5 4-5s5 2 5 5"/>',
+  chuva:'<path d="M9 18a6 6 0 1 1 3-11 7 7 0 0 1 13 4 4 4 0 0 1-1 7z"/><path d="M11 22l-1 3M17 22l-1 3M23 22l-1 3"/>',
+  estrela:'<path d="M16 5l3.2 6.6 7.3 1-5.3 5.1 1.3 7.3L16 21.5 9.5 25l1.3-7.3-5.3-5.1 7.3-1z"/>',
+  onda:'<path d="M3 13c3-2 5-2 8 0s5 2 8 0 5-2 8 0"/><path d="M3 20c3-2 5-2 8 0s5 2 8 0 5-2 8 0"/>'
+};
+
+/*
+  Cada opção soma ponto para uma fragrância da linha Ekos Frescor,
+  sem revelar o nome para quem responde:
+  andiroba (amadeirado, natureza), pitanga (solar, alegre), cacau (doce, partilha),
+  maracuja (calma), castanha (aconchego), acai (energia, aventura).
+*/
+const PERGUNTAS = [
+  {
+    titulo:'Onde suas melhores <em>lembranças</em> costumam acontecer?',
+    apoio:'Escolha o cenário que mais aparece quando você fecha os olhos.',
+    opcoes:[
+      {f:'andiroba',ic:'folha',t:'No meio do verde',s:'Trilha, mato e cheiro de chuva na terra'},
+      {f:'pitanga',ic:'sol',t:'Debaixo do sol',s:'Quintal, praia ou qualquer lugar ao ar livre'},
+      {f:'cacau',ic:'pessoas',t:'Em volta da mesa',s:'Gente querida dividindo algo gostoso'},
+      {f:'maracuja',ic:'livro',t:'Num canto só meu',s:'Silêncio, um livro e tempo de sobra'},
+      {f:'castanha',ic:'casa',t:'Em casa',s:'Sofá, cobertor e o barulho da cozinha'},
+      {f:'acai',ic:'pin',t:'Na estrada',s:'Lugares novos a cada parada'}
+    ]
+  },
+  {
+    titulo:'Qual momento você<br>gostaria de <em>reviver?</em>',
+    apoio:'Escolha a lembrança que mais combina com você. Deslize para ver todas.',
+    opcoes:[
+      {f:'andiroba',ic:'folha',t:'Caminho entre árvores',s:'Silêncio, ar fresco e natureza por perto'},
+      {f:'pitanga',ic:'sol',t:'Verão no quintal',s:'Tardes livres, pé no chão e risadas'},
+      {f:'cacau',ic:'chocolate',t:'Pequenos prazeres',s:'Um chocolate dividido e alguém por perto'},
+      {f:'maracuja',ic:'entardecer',t:'Calma de fim de tarde',s:'Um momento só seu, sem pressa'},
+      {f:'castanha',ic:'xicara',t:'Abraço quentinho',s:'Dia frio, cobertor e conversa boa'},
+      {f:'acai',ic:'pin',t:'Uma aventura marcante',s:'Lugares novos e gente pelo caminho'}
+    ]
+  },
+  {
+    titulo:'O que deixa uma lembrança <em>inesquecível?</em>',
+    apoio:'Pense no detalhe que faz você voltar a ela.',
+    opcoes:[
+      {f:'andiroba',ic:'chuva',t:'O cheiro do lugar',s:'Madeira, folhas e terra molhada'},
+      {f:'pitanga',ic:'musica',t:'A trilha sonora',s:'Aquela música que tocava alto'},
+      {f:'cacau',ic:'coracao',t:'Um carinho inesperado',s:'Um gesto pequeno que adoçou o dia'},
+      {f:'maracuja',ic:'onda',t:'A sensação de paz',s:'O corpo leve e a cabeça tranquila'},
+      {f:'castanha',ic:'pessoas',t:'Quem estava junto',s:'Família, amigos e muita conversa'},
+      {f:'acai',ic:'estrela',t:'A primeira vez',s:'Coragem de fazer algo novo'}
+    ]
+  },
+  {
+    titulo:'Que sensação você quer <em>levar com você?</em>',
+    apoio:'A última escolha revela a sua memória.',
+    opcoes:[
+      {f:'andiroba',ic:'folha',t:'Equilíbrio',s:'Pés no chão e mente em ordem'},
+      {f:'pitanga',ic:'sol',t:'Alegria',s:'Leveza para sorrir à toa'},
+      {f:'cacau',ic:'chocolate',t:'Doçura',s:'Um momento bom para saborear devagar'},
+      {f:'maracuja',ic:'entardecer',t:'Tranquilidade',s:'Respirar fundo e desacelerar'},
+      {f:'castanha',ic:'casa',t:'Aconchego',s:'Sentir que está em casa'},
+      {f:'acai',ic:'pin',t:'Energia',s:'Vontade de ir mais longe'}
+    ]
+  }
+];
+
+const RESULTADOS = {
+  cacau:{titulo:'Doces <em>momentos</em>',texto:'Você guarda os momentos leves e gostosos: o chocolate dividido, a conversa que se estende, o carinho que chega sem motivo. Para você, lembrar é saborear de novo.',tags:['Leveza','Partilha','Pequenos prazeres']},
+  andiroba:{titulo:'Raízes <em>verdes</em>',texto:'Suas lembranças moram ao ar livre: o cheiro da mata, o silêncio entre as árvores, o chão firme. Para você, lembrar é voltar a respirar fundo.',tags:['Natureza','Equilíbrio','Silêncio']},
+  pitanga:{titulo:'Dias de <em>sol</em>',texto:'Você coleciona tardes de verão, risadas altas e pés descalços. Para você, lembrar é sentir o calor de um dia feliz outra vez.',tags:['Alegria','Verão','Liberdade']},
+  maracuja:{titulo:'Pausas <em>serenas</em>',texto:'Você guarda os momentos de calma: o fim de tarde sem pressa, o tempo só seu. Para você, lembrar é desacelerar.',tags:['Calma','Pausa','Bem-estar']},
+  castanha:{titulo:'Abraço de <em>casa</em>',texto:'Suas memórias têm cheiro de casa: cobertor, cozinha cheia e conversa boa. Para você, lembrar é sentir-se acolhido.',tags:['Aconchego','Família','Conforto']},
+  acai:{titulo:'Caminhos <em>novos</em>',texto:'Você guarda as primeiras vezes, as estradas e as pessoas que cruzaram seu caminho. Para você, lembrar é ter vontade de ir mais longe.',tags:['Aventura','Energia','Descoberta']}
+};
+
+/* Estado */
+let atual = 0;
+const respostas = new Array(PERGUNTAS.length).fill(null);
+const $ = id => document.getElementById(id);
+const trilho = $('trilho');
+
+function mostrarPergunta(){
+  const q = PERGUNTAS[atual];
+  $('contador').textContent = `Pergunta ${atual+1} de ${PERGUNTAS.length}`;
+  $('barra').style.width = `${(atual+1)/PERGUNTAS.length*100}%`;
+  $('pergunta').innerHTML = q.titulo;
+  $('apoio').textContent = q.apoio;
+  trilho.innerHTML = q.opcoes.map((o,i)=>`
+    <button class="op entrar${respostas[atual]===i?' sel':''}" role="radio" aria-checked="${respostas[atual]===i}" data-i="${i}" style="animation-delay:${i*50}ms">
+      <span class="ic"><svg viewBox="0 0 32 32" aria-hidden="true">${ICONES[o.ic]}</svg></span>
+      <span><b>${o.t}</b><small>${o.s}</small></span>
+    </button>`).join('');
+  trilho.scrollLeft = 0;
+  $('avancar').disabled = respostas[atual]===null;
+  $('avancar').innerHTML = atual===PERGUNTAS.length-1 ? 'Ver meu resultado &nbsp;→' : 'Próxima pergunta &nbsp;→';
+  atualizarDots();
+}
+
+trilho.addEventListener('click', e=>{
+  const b = e.target.closest('.op'); if(!b) return;
+  respostas[atual] = +b.dataset.i;
+  trilho.querySelectorAll('.op').forEach(el=>{
+    const on = el===b; el.classList.toggle('sel',on); el.setAttribute('aria-checked',on);
+  });
+  $('avancar').disabled = false;
+});
+
+/* Carrossel */
+function passo(){ const c = trilho.querySelector('.op'); return c ? c.offsetWidth + 28 : 348; }
+$('ant').onclick = ()=> trilho.scrollBy({left:-passo()*2,behavior:'smooth'});
+$('prox').onclick = ()=> trilho.scrollBy({left:passo()*2,behavior:'smooth'});
+function atualizarDots(){
+  const max = trilho.scrollWidth - trilho.clientWidth;
+  const paginas = max > 4 ? 3 : 1;
+  const ativa = max > 4 ? Math.round(trilho.scrollLeft / max * (paginas-1)) : 0;
+  $('dots').innerHTML = Array.from({length:paginas},(_,i)=>`<i class="${i===ativa?'on':''}"></i>`).join('');
+  $('ant').hidden = $('prox').hidden = paginas===1;
+}
+trilho.addEventListener('scroll', ()=> requestAnimationFrame(atualizarDots));
+window.addEventListener('resize', atualizarDots);
+
+/* Navegação */
+$('comecar').onclick = ()=>{
+  $('quiz').hidden = false; $('resultado').hidden = true;
+  atual = 0; mostrarPergunta();
+  $('quiz').scrollIntoView({behavior:'smooth'});
+};
+$('voltar').onclick = ()=>{
+  if(atual===0){ $('inicio').scrollIntoView({behavior:'smooth'}); return; }
+  atual--; mostrarPergunta();
+};
+$('avancar').onclick = ()=>{
+  if(respostas[atual]===null) return;
+  if(atual < PERGUNTAS.length-1){ atual++; mostrarPergunta(); $('quiz').scrollIntoView({behavior:'smooth'}); }
+  else mostrarResultado();
+};
+$('refazer').onclick = ()=>{ respostas.fill(null); $('comecar').click(); };
+
+function calcular(){
+  const pontos = {};
+  respostas.forEach((r,i)=>{ const f = PERGUNTAS[i].opcoes[r].f; pontos[f] = (pontos[f]||0)+1; });
+  const maior = Math.max(...Object.values(pontos));
+  // Em caso de empate, Cacau tem prioridade (fragrância destaque da campanha)
+  if(pontos.cacau===maior) return 'cacau';
+  return Object.keys(pontos).find(f=>pontos[f]===maior);
+}
+
+function mostrarResultado(){
+  const chave = calcular(), r = RESULTADOS[chave];
+  $('r-titulo').innerHTML = r.titulo;
+  $('r-texto').textContent = r.texto;
+  $('r-tags').innerHTML = r.tags.map(t=>`<span>${t}</span>`).join('');
+  if(chave==='cacau'){
+    $('p-rotulo').textContent = 'O aroma da sua memória';
+    $('p-texto').textContent = 'Notas cítricas adocicadas e a cremosidade do cacau da Amazônia, para deixar os próximos momentos ainda mais doces.';
+  } else {
+    $('p-rotulo').textContent = 'Para criar novas lembranças';
+    $('p-texto').textContent = 'Notas cítricas adocicadas e a cremosidade do cacau da Amazônia: um aroma para transformar os próximos momentos em memórias doces.';
+  }
+  const titulo = r.titulo.replace(/<[^>]+>/g,'');
+  const msg = `Minha memória é "${titulo}". Descubra a sua em Desperte suas memórias:`;
+  $('whats').href = 'https://wa.me/?text=' + encodeURIComponent(msg + ' ' + location.href);
+  $('compartilhar').onclick = async ()=>{
+    if(navigator.share){ try{ await navigator.share({title:'Desperte suas memórias',text:msg,url:location.href}); }catch(e){} }
+    else copiar();
+  };
+  $('resultado').hidden = false;
+  $('resultado').scrollIntoView({behavior:'smooth'});
+}
+
+async function copiar(){
+  try{ await navigator.clipboard.writeText(location.href); aviso('Link copiado!'); }
+  catch(e){ aviso('Não foi possível copiar o link.'); }
+}
+$('copiar').onclick = copiar;
+function aviso(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); setTimeout(()=>el.classList.remove('on'),2200); }
+</script>
+</body>
+</html>
