@@ -22,11 +22,10 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 
 /* topo */
 .topo{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px var(--gutter);border-bottom:1px solid var(--areia);background:var(--papel)}
-.topo .logo{height:26px;width:auto;display:block}
+.topo .logo{height:20px;width:auto;display:block}
 .menu{display:flex;gap:40px;font-size:15px}
-.menu a{color:var(--texto);text-decoration:none;transition:color .2s}
-.menu a:hover{color:var(--cacau)}
-.menu a.ativo{color:var(--cacau-esc);font-weight:600}
+.menu span{color:var(--texto);cursor:default}
+.menu .ativo{color:var(--cacau-esc);font-weight:600}
 
 /* 1. abertura */
 .hero{position:relative;min-height:calc(100vh - 120px);display:flex;align-items:center;overflow:hidden}
@@ -154,8 +153,8 @@ footer{border-top:1px solid var(--areia);padding:28px var(--gutter);font-size:13
 @media (max-width:560px){
   .aviso{font-size:12px;padding:8px var(--gutter)}
   .topo{padding:16px var(--gutter)}
-  .topo .logo{height:22px}
-  .menu a:not(.ativo){display:none}
+  .topo .logo{height:18px}
+  .menu{display:none}
 
   .hero .acoes{flex-direction:column;align-items:stretch;gap:14px}
   .hero .acoes .btn{justify-content:center}
