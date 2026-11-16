@@ -21,13 +21,12 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .aviso{background:var(--cacau-esc);color:#E2D3C4;font-size:13px;text-align:center;padding:10px var(--gutter)}
 
 /* topo */
-.topo{display:flex;align-items:center;justify-content:space-between;padding:26px var(--gutter);border-bottom:1px solid var(--areia);background:var(--papel)}
-.topo .marcas{display:flex;align-items:center;gap:18px}
-.topo .logo{height:34px;width:auto;display:block}
-.topo .div{width:1px;height:28px;background:var(--areia)}
-.topo .marca{font-family:'Lora',serif;font-size:22px;color:var(--cacau)}
-.topo .marca em{color:var(--caramelo)}
-.topo small{font-size:13px;color:var(--texto)}
+.topo{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px var(--gutter);border-bottom:1px solid var(--areia);background:var(--papel)}
+.topo .logo{height:26px;width:auto;display:block}
+.menu{display:flex;gap:40px;font-size:15px}
+.menu a{color:var(--texto);text-decoration:none;transition:color .2s}
+.menu a:hover{color:var(--cacau)}
+.menu a.ativo{color:var(--cacau-esc);font-weight:600}
 
 /* 1. abertura */
 .hero{position:relative;min-height:calc(100vh - 120px);display:flex;align-items:center;overflow:hidden}
@@ -120,7 +119,7 @@ footer{border-top:1px solid var(--areia);padding:28px var(--gutter);font-size:13
 /* Tablets na vertical e celulares */
 @media (max-width:900px){
   .topo{padding:18px var(--gutter)}
-  .topo small{display:none}
+  .menu{gap:24px;font-size:14px}
 
   .hero{flex-direction:column;align-items:stretch;min-height:auto}
   .hero .foto{position:relative;width:100%;height:clamp(300px,55vw,460px);order:-1;background-position:center 22%}
@@ -154,10 +153,9 @@ footer{border-top:1px solid var(--areia);padding:28px var(--gutter);font-size:13
 /* Celulares */
 @media (max-width:560px){
   .aviso{font-size:12px;padding:8px var(--gutter)}
-  .topo .marcas{display:flex;align-items:center;gap:18px}
-.topo .logo{height:34px;width:auto;display:block}
-.topo .div{width:1px;height:28px;background:var(--areia)}
-.topo .marca{font-size:20px}
+  .topo{padding:16px var(--gutter)}
+  .topo .logo{height:22px}
+  .menu a:not(.ativo){display:none}
 
   .hero .acoes{flex-direction:column;align-items:stretch;gap:14px}
   .hero .acoes .btn{justify-content:center}
