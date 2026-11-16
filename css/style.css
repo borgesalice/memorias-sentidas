@@ -22,6 +22,9 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 
 /* topo */
 .topo{display:flex;align-items:center;justify-content:space-between;padding:26px var(--gutter);border-bottom:1px solid var(--areia);background:var(--papel)}
+.topo .marcas{display:flex;align-items:center;gap:18px}
+.topo .logo{height:34px;width:auto;display:block}
+.topo .div{width:1px;height:28px;background:var(--areia)}
 .topo .marca{font-family:'Lora',serif;font-size:22px;color:var(--cacau)}
 .topo .marca em{color:var(--caramelo)}
 .topo small{font-size:13px;color:var(--texto)}
@@ -151,7 +154,10 @@ footer{border-top:1px solid var(--areia);padding:28px var(--gutter);font-size:13
 /* Celulares */
 @media (max-width:560px){
   .aviso{font-size:12px;padding:8px var(--gutter)}
-  .topo .marca{font-size:20px}
+  .topo .marcas{display:flex;align-items:center;gap:18px}
+.topo .logo{height:34px;width:auto;display:block}
+.topo .div{width:1px;height:28px;background:var(--areia)}
+.topo .marca{font-size:20px}
 
   .hero .acoes{flex-direction:column;align-items:stretch;gap:14px}
   .hero .acoes .btn{justify-content:center}
