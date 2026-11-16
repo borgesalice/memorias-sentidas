@@ -29,7 +29,7 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 
 /* 1. abertura */
 .hero{position:relative;min-height:calc(100vh - 120px);display:flex;align-items:center;overflow:hidden}
-.hero .foto{position:absolute;right:0;top:0;bottom:0;width:45%;background:url(../img/cacau-ambiente.jpg) center 40%/cover}
+.hero .foto{position:absolute;right:0;top:0;bottom:0;width:45%;background:url(img/cacau-ambiente.jpg) center 40%/cover}
 .hero .foto::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--creme) 0%,rgba(251,244,234,.5) 14%,rgba(251,244,234,0) 34%)}
 .hero .txt{position:relative;padding:80px var(--gutter) 140px;max-width:960px}
 .hero h1{font-size:clamp(52px,6.2vw,112px);line-height:1.02;margin-top:22px;letter-spacing:-.01em}
@@ -89,7 +89,7 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .prod{border-radius:24px;background:var(--papel);border:1px solid var(--areia);padding:48px 52px 52px;display:flex;flex-direction:column;overflow:hidden}
 .prod h5{font-family:'Lora',serif;font-weight:500;font-size:clamp(30px,2.1vw,40px);line-height:1.1;margin-top:12px}
 .prod h5 em{color:var(--cacau)}
-.prod .img{height:320px;margin:10px -52px 0;background:url(../img/cacau-frasco.jpg) center 60%/auto 150% no-repeat;mix-blend-mode:multiply}
+.prod .img{height:320px;margin:10px -52px 0;background:url(img/cacau-frasco.jpg) center 60%/auto 150% no-repeat;mix-blend-mode:multiply}
 .prod p{font-size:16px;color:var(--texto);line-height:1.6;margin-top:14px;font-weight:300}
 .prod .btn{margin-top:28px;align-self:flex-start;text-decoration:none}
 .refazer{display:block;margin:40px auto 0;font-size:15px;color:var(--cacau);text-decoration:underline;text-underline-offset:4px}
