@@ -118,7 +118,8 @@ footer{border-top:1px solid var(--areia);padding:28px var(--gutter);font-size:13
 /* Tablets na vertical e celulares */
 @media (max-width:900px){
   .topo{padding:18px var(--gutter)}
-  .menu{gap:24px;font-size:14px}
+  .menu{display:none}
+  .topo .logo{height:18px}
 
   .hero{flex-direction:column;align-items:stretch;min-height:auto}
   .hero .foto{position:relative;width:100%;height:clamp(300px,55vw,460px);order:-1;background-position:center 22%}
@@ -153,8 +154,6 @@ footer{border-top:1px solid var(--areia);padding:28px var(--gutter);font-size:13
 @media (max-width:560px){
   .aviso{font-size:12px;padding:8px var(--gutter)}
   .topo{padding:16px var(--gutter)}
-  .topo .logo{height:18px}
-  .menu{display:none}
 
   .hero .acoes{flex-direction:column;align-items:stretch;gap:14px}
   .hero .acoes .btn{justify-content:center}
